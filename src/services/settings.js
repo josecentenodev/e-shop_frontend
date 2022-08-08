@@ -1,0 +1,1 @@
+export const API_URL = 'https://devcito-eshop.herokuapp.com/api/v1'
