@@ -2,13 +2,16 @@ import { useState, useEffect } from "react";
 import ListOfCategories from "./ListOfCategories";
 import { useCategories } from "../../hooks/useCategories";
 import { BounceLoader } from "react-spinners";
+import { Tab } from "@headlessui/react";
 
 export default function Categories() {
     const { categories } = useCategories();
     const [loading, setLoading] = useState(true);
     useEffect(() => {
         if (categories) {
-            setLoading(false);
+            setTimeout(() => {
+                setLoading(false);
+            }, 3000);
         }
     }, [categories]);
     return (
@@ -25,7 +28,9 @@ export default function Categories() {
                     />
                 </>
             ) : (
-                <ListOfCategories categories={categories} />
+                <>
+                            <ListOfCategories categories={categories} />
+                </>
             )}
         </>
     );

@@ -1,18 +1,43 @@
 import React from "react";
-import { NavLink, Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
+import { Tab } from "@headlessui/react";
+
+
+function classNames(...classes) {
+    return classes.filter(Boolean).join(" ");
+}
 
 export default function ListOfCategories({ categories }) {
 
     return (
         <>
-        <div className=" flex flex-row w-full justify-evenly mt-10 flex-wrap">
-            {categories.map(({ id, name, color, icon }) => (
-                        <NavLink style={({isActive}) => isActive ? {backgroundColor: color} : undefined } to={`${id}`} key={id} className=" mb-3 p-3 rounded-md text-white text-center text-lg bg-slate-600 w-44">
-                            {name}
-                        </NavLink>
-            ))}
-        </div>
-        <Outlet />
+            <Tab.Group>
+                <Tab.List className='mt-10 max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 flex justify-center sm:justify-start items-center flex-wrap'>
+                    {categories.map(({ id, name}) => (
+                        <>
+                            <Link to={`${id}`}>
+                                <Tab
+                                    key={name}
+                                    className={({ selected }) =>
+                                        classNames(
+                                            selected
+                                                ? "bg-indigo-500 text-white"
+                                                : "text-gray-400 hover:bg-indigo-300 hover:text-white",
+                                            "mx-4 px-4 py-3 rounded-md text-sm font-medium outline-none"
+                                        )
+                                    }
+                                    aria-current={({ selected }) =>
+                                        selected ? "page" : undefined
+                                    }
+                                >
+                                    {name}
+                                </Tab>
+                            </Link>
+                        </>
+                    ))}
+                </Tab.List>
+            </Tab.Group>
+            <Outlet />
         </>
     );
 }
